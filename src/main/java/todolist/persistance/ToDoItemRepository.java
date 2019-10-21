@@ -45,7 +45,7 @@ public class ToDoItemRepository {
     }
 
     public List<ToDoItem> getToDoItems() throws SQLException, IOException, ClassNotFoundException {
-        String sql = "SELECT id, ide, description, deadline, done FROM to_do_item ";
+        String sql = "SELECT id, description, deadline, done FROM to_do_item ";
 
         List<ToDoItem> toDoItems = new ArrayList<>();
 
