@@ -1,8 +1,7 @@
 package todolist.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.fasttrackit.ToDoItemService;
+import org.fasttrackit.config.ObjectMapperConfiguration;
 import todolist.domain.ToDoItem;
 import todolist.transfer.CreatedToDoItemRequest;
 import todolist.transfer.UpdateToDoItemRequest;
@@ -25,10 +24,9 @@ public class ToDoItemServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
 
-        CreatedToDoItemRequest request = objectMapper.readValue(req.getReader(), CreatedToDoItemRequest.class);
+        CreatedToDoItemRequest request = ObjectMapperConfiguration.getObjectMapper().
+                readValue(req.getReader(), CreatedToDoItemRequest.class);
 
         try {
             toDoItemService.createToDoItem(request);
@@ -55,10 +53,10 @@ public class ToDoItemServlet extends HttpServlet {
 
     protected void doDelete(HttpServletResponse resp, HttpServletRequest req) throws ServletException, IOException {
         String id = req.getParameter("id");
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
 
-        UpdateToDoItemRequest request = objectMapper.readValue(req.getReader(), UpdateToDoItemRequest.class);
+
+        UpdateToDoItemRequest request = ObjectMapperConfiguration.getObjectMapper().readValue(req.getReader(),
+                UpdateToDoItemRequest.class);
 
         try {
             toDoItemService.updateToDoItem(Long.parseLong(id), request);
@@ -75,9 +73,8 @@ public class ToDoItemServlet extends HttpServlet {
 
         try {
             List<ToDoItem> toDoItems = toDoItemService.getToDoItems();
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.registerModule(new JavaTimeModule());
-            String response = objectMapper.writeValueAsString(toDoItems);
+
+            String response = ObjectMapperConfiguration.getObjectMapper().writeValueAsString(toDoItems);
             resp.getWriter().print(response);
 
         } catch (SQLException | ClassNotFoundException e) {
