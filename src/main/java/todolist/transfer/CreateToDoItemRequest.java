@@ -3,7 +3,7 @@ package todolist.transfer;
 import java.time.LocalDate;
 //DTO (Data Transfer Object)
 
-public class CreatedToDoItemRequest {
+public class CreateToDoItemRequest {
     private String description;
     private LocalDate deadline;
 

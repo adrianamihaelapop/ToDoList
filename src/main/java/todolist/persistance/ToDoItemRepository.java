@@ -1,7 +1,7 @@
 package todolist.persistance;
 
 import todolist.domain.ToDoItem;
-import todolist.transfer.CreatedToDoItemRequest;
+import todolist.transfer.CreateToDoItemRequest;
 
 import java.io.IOException;
 import java.sql.*;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ToDoItemRepository {
-    public void createToDoItem(CreatedToDoItemRequest request) throws SQLException, IOException, ClassNotFoundException {
+    public void createToDoItem(CreateToDoItemRequest request) throws SQLException, IOException, ClassNotFoundException {
         String sql = "INSERT INTO to_do_item (description, deadline) VALUES (?, ?)";
         // try-with-resources
         try (Connection connection = DatabaseConfiguration.getConnection();
